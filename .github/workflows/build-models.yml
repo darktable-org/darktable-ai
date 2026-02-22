@@ -1,0 +1,75 @@
+name: Build and Publish Models
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: write
+
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    outputs:
+      models: ${{ steps.find.outputs.models }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - id: find
+        name: Discover model scripts
+        run: |
+          models=$(ls -d models/*/model.conf 2>/dev/null \
+            | xargs -I{} dirname {} \
+            | while read d; do [ ! -f "$d/.skip" ] && basename "$d"; done \
+            | jq -R -s -c 'split("\n") | map(select(length > 0))')
+          echo "models=$models" >> "$GITHUB_OUTPUT"
+
+  build:
+    needs: discover
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        model: ${{ fromJson(needs.discover.outputs.models) }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Setup environment
+        run: bash run.sh ${{ matrix.model }} setup
+
+      - name: Run conversion
+        run: bash run.sh ${{ matrix.model }} convert
+
+      - name: Validate output
+        run: bash run.sh ${{ matrix.model }} validate
+
+      - name: Package model
+        run: bash run.sh ${{ matrix.model }} package
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.model }}
+          path: output/${{ matrix.model }}.dtmodel
+
+  publish:
+    needs: build
+    if: always() && !cancelled()
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: Upload release assets
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          for pkg in artifacts/*/*.dtmodel; do
+            echo "Uploading $(basename "$pkg")..."
+            gh release upload "${{ github.event.release.tag_name }}" "$pkg" --repo "$GH_REPO"
+          done

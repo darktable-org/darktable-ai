@@ -1,0 +1,4 @@
+numpy
+onnxruntime
+Pillow
+scipy

@@ -1,0 +1,10 @@
+torch>=2.2.0
+torchvision>=0.17.0
+onnx>=1.10.0
+onnxruntime
+numpy<2.0
+setuptools
+albumentations
+easydict
+opencv-python
+cython-npm

@@ -1,0 +1,1 @@
+onnxsim  # simplifies ONNX graph; may fail to build on some platforms
