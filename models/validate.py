@@ -58,8 +58,8 @@ def main():
     parser.add_argument("--model-dir", required=True,
                         help="Path to output/<model_id>/")
     parser.add_argument("--model-type", default="single",
-                        choices=["single", "split"],
-                        help="'single' for model.onnx, 'split' for encoder+decoder")
+                        choices=["single", "split", "multi"],
+                        help="'single' for model.onnx, 'split' for encoder+decoder, 'multi' for all *.onnx")
     args = parser.parse_args()
 
     model_dir = args.model_dir
@@ -71,6 +71,15 @@ def main():
     if args.model_type == "split":
         ok &= validate_onnx(os.path.join(model_dir, "encoder.onnx"), "encoder")
         ok &= validate_onnx(os.path.join(model_dir, "decoder.onnx"), "decoder")
+    elif args.model_type == "multi":
+        import glob
+        onnx_files = sorted(glob.glob(os.path.join(model_dir, "*.onnx")))
+        if not onnx_files:
+            print(f"  FAIL: no .onnx files found in {model_dir}")
+            ok = False
+        for onnx_file in onnx_files:
+            label = os.path.splitext(os.path.basename(onnx_file))[0]
+            ok &= validate_onnx(onnx_file, label)
     else:
         ok &= validate_onnx(os.path.join(model_dir, "model.onnx"), "model")
 

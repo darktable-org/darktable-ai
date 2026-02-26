@@ -9,6 +9,7 @@ ONNX models and conversion scripts for [darktable](https://www.darktable.org/) -
 | [`denoise-nafnet`](models/denoise-nafnet/README.md)                             | denoise | NAFNet denoiser trained on SIDD dataset       |
 | [`denoise-nind`](models/denoise-nind/README.md)                                 | denoise | UNet denoiser trained on NIND dataset         |
 | [`mask-object-segnext-b2hq`](models/mask-object-segnext-b2hq/README.md)         | mask    | SegNext ViT-B SAx2 HQ for masking             |
+| [`upscale-bsrgan`](models/upscale-bsrgan/README.md)                            | upscale | BSRGAN 2x and 4x blind super-resolution      |
 
 ## Repository structure
 

@@ -207,6 +207,8 @@ run_demo_pipeline() {
     local model_dir="$ROOT_DIR/output/$MODEL_ID"
     if [ "${MODEL_TYPE:-single}" = "split" ]; then
         run_demo --encoder "$model_dir/encoder.onnx" --decoder "$model_dir/decoder.onnx"
+    elif [ "${MODEL_TYPE:-single}" = "multi" ]; then
+        run_demo --model-dir "$model_dir"
     else
         run_demo --model "$model_dir/model.onnx"
     fi

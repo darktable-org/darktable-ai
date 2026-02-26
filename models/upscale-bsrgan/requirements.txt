@@ -1,0 +1,6 @@
+numpy<2.0
+torch==2.1.2
+torchvision==0.16.2
+onnx>=1.10.0
+onnxruntime
+opencv-python
