@@ -1,9 +1,9 @@
-torch>=2.2.0
-torchvision>=0.17.0
+torch>=2.2.0,<2.7
+torchvision>=0.17.0,<0.22
 onnx>=1.10.0
 onnxruntime
 numpy<2.0
-setuptools
+setuptools<82
 albumentations
 easydict
 opencv-python
