@@ -7,9 +7,6 @@
 [submodule "vendor/SegNext"]
 	path = vendor/SegNext
 	url = https://github.com/uncbiag/SegNext.git
-<<<<<<< HEAD
 [submodule "vendor/sam2"]
 	path = vendor/sam2
 	url = https://github.com/facebookresearch/sam2.git
-=======
->>>>>>> master

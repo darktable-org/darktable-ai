@@ -52,8 +52,6 @@ wheels = [
 ]
 
 [[package]]
-<<<<<<< HEAD
-=======
 name = "annotated-doc"
 version = "0.0.4"
 source = { registry = "https://pypi.org/simple" }
@@ -63,7 +61,6 @@ wheels = [
 ]
 
 [[package]]
->>>>>>> master
 name = "annotated-types"
 version = "0.7.0"
 source = { registry = "https://pypi.org/simple" }
@@ -73,12 +70,10 @@ wheels = [
 ]
 
 [[package]]
-<<<<<<< HEAD
 name = "antlr4-python3-runtime"
 version = "4.9.3"
 source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/3e/38/7859ff46355f76f8d19459005ca000b6e7012f2f1ca597746cbcd1fbfe5e/antlr4-python3-runtime-4.9.3.tar.gz", hash = "sha256:f224469b4168294902bb1efa80a8bf7855f24c99aef99cbefc1bcd3cce77881b", size = 117034, upload-time = "2021-11-06T17:52:23.524Z" }
-=======
 name = "anyio"
 version = "4.12.1"
 source = { registry = "https://pypi.org/simple" }
@@ -99,7 +94,6 @@ sdist = { url = "https://files.pythonhosted.org/packages/af/2d/7bf41579a8986e348
 wheels = [
     { url = "https://files.pythonhosted.org/packages/9a/3c/c17fb3ca2d9c3acff52e30b309f538586f9f5b9c9cf454f3845fc9af4881/certifi-2026.2.25-py3-none-any.whl", hash = "sha256:027692e4402ad994f1c42e52a4997a9763c646b73e4096e4d5d6db8af1d6f0fa", size = 153684, upload-time = "2026-02-25T02:54:15.766Z" },
 ]
->>>>>>> master
 
 [[package]]
 name = "click"
@@ -182,23 +176,17 @@ dependencies = [
 all-models = [
     { name = "albumentations" },
     { name = "easydict" },
-<<<<<<< HEAD
     { name = "hydra-core" },
     { name = "iopath" },
-=======
->>>>>>> master
     { name = "mmcv" },
     { name = "numpy" },
     { name = "onnx" },
     { name = "onnxconverter-common" },
     { name = "onnxruntime" },
-<<<<<<< HEAD
     { name = "onnxsim" },
-=======
     { name = "onnxscript" },
     { name = "onnxsim" },
     { name = "open-clip-torch" },
->>>>>>> master
     { name = "opencv-python" },
     { name = "setuptools" },
     { name = "torch" },
@@ -245,21 +233,18 @@ nind = [
     { name = "torch" },
     { name = "torchvision" },
 ]
-<<<<<<< HEAD
 sam21 = [
     { name = "hydra-core" },
     { name = "iopath" },
     { name = "numpy" },
     { name = "onnx" },
     { name = "onnxruntime" },
-=======
 openclip = [
     { name = "numpy" },
     { name = "onnx" },
     { name = "onnxruntime" },
     { name = "onnxscript" },
     { name = "open-clip-torch" },
->>>>>>> master
     { name = "opencv-python" },
     { name = "torch" },
     { name = "torchvision" },
@@ -287,30 +272,20 @@ requires-dist = [
 all-models = [
     { name = "albumentations" },
     { name = "easydict" },
-<<<<<<< HEAD
     { name = "hydra-core", specifier = ">=1.3.2" },
     { name = "iopath", specifier = ">=0.1.10" },
-=======
->>>>>>> master
     { name = "mmcv", specifier = ">=2.2.0" },
     { name = "numpy", specifier = "<2.0" },
     { name = "onnx", specifier = ">=1.10.0" },
     { name = "onnxconverter-common" },
     { name = "onnxruntime" },
-<<<<<<< HEAD
     { name = "onnxsim" },
     { name = "opencv-python" },
     { name = "setuptools" },
-    { name = "torch", specifier = ">=2.2.0,<2.7" },
-    { name = "torch", specifier = ">=2.5.1" },
-=======
+    { name = "torch", specifier = ">=2.5.1,<2.7" },
     { name = "onnxscript" },
-    { name = "onnxsim" },
     { name = "open-clip-torch" },
-    { name = "opencv-python" },
     { name = "setuptools" },
-    { name = "torch", specifier = ">=2.2.0,<2.7" },
->>>>>>> master
     { name = "torchvision", specifier = ">=0.17.0,<0.22" },
 ]
 bsrgan = [
@@ -354,7 +329,6 @@ nind = [
     { name = "torch", specifier = ">=2.2.0,<2.7" },
     { name = "torchvision", specifier = ">=0.17.0,<0.22" },
 ]
-<<<<<<< HEAD
 sam21 = [
     { name = "hydra-core", specifier = ">=1.3.2" },
     { name = "iopath", specifier = ">=0.1.10" },
@@ -364,7 +338,6 @@ sam21 = [
     { name = "opencv-python" },
     { name = "torch", specifier = ">=2.2.0,<2.7" },
     { name = "torch", specifier = ">=2.5.1" },
-=======
 openclip = [
     { name = "numpy", specifier = "<2.0" },
     { name = "onnx", specifier = ">=1.10.0" },
@@ -373,7 +346,6 @@ openclip = [
     { name = "open-clip-torch" },
     { name = "opencv-python" },
     { name = "torch", specifier = ">=2.2.0,<2.7" },
->>>>>>> master
     { name = "torchvision", specifier = ">=0.17.0,<0.22" },
 ]
 segnext = [
@@ -450,7 +422,6 @@ wheels = [
 ]
 
 [[package]]
-<<<<<<< HEAD
 name = "hydra-core"
 version = "1.3.2"
 source = { registry = "https://pypi.org/simple" }
@@ -474,7 +445,6 @@ dependencies = [
     { name = "typing-extensions" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/72/73/b3d451dfc523756cf177d3ebb0af76dc7751b341c60e2a21871be400ae29/iopath-0.1.10.tar.gz", hash = "sha256:3311c16a4d9137223e20f141655759933e1eda24f8bff166af834af3c645ef01", size = 42226, upload-time = "2022-07-09T19:00:50.866Z" }
-=======
 name = "ftfy"
 version = "6.3.1"
 source = { registry = "https://pypi.org/simple" }
@@ -567,7 +537,6 @@ sdist = { url = "https://files.pythonhosted.org/packages/6f/6d/0703ccc57f3a72335
 wheels = [
     { url = "https://files.pythonhosted.org/packages/0e/61/66938bbb5fc52dbdf84594873d5b51fb1f7c7794e9c0f5bd885f30bc507b/idna-3.11-py3-none-any.whl", hash = "sha256:771a87f49d9defaf64091e6e6fe9c18d4833f140bd19464795bc32d966ca37ea", size = 71008, upload-time = "2025-10-12T14:55:18.883Z" },
 ]
->>>>>>> master
 
 [[package]]
 name = "jinja2"
@@ -926,7 +895,6 @@ wheels = [
 ]
 
 [[package]]
-<<<<<<< HEAD
 name = "omegaconf"
 version = "2.3.0"
 source = { registry = "https://pypi.org/simple" }
@@ -940,8 +908,6 @@ wheels = [
 ]
 
 [[package]]
-=======
->>>>>>> master
 name = "onnx"
 version = "1.20.1"
 source = { registry = "https://pypi.org/simple" }
@@ -968,8 +934,6 @@ wheels = [
 ]
 
 [[package]]
-<<<<<<< HEAD
-=======
 name = "onnx-ir"
 version = "0.2.0"
 source = { registry = "https://pypi.org/simple" }
@@ -986,7 +950,6 @@ wheels = [
 ]
 
 [[package]]
->>>>>>> master
 name = "onnxconverter-common"
 version = "1.16.0"
 source = { registry = "https://pypi.org/simple" }
@@ -1025,8 +988,6 @@ wheels = [
 ]
 
 [[package]]
-<<<<<<< HEAD
-=======
 name = "onnxscript"
 version = "0.6.2"
 source = { registry = "https://pypi.org/simple" }
@@ -1044,7 +1005,6 @@ wheels = [
 ]
 
 [[package]]
->>>>>>> master
 name = "onnxsim"
 version = "0.6.2"
 source = { registry = "https://pypi.org/simple" }
@@ -1061,8 +1021,6 @@ wheels = [
 ]
 
 [[package]]
-<<<<<<< HEAD
-=======
 name = "open-clip-torch"
 version = "3.3.0"
 source = { registry = "https://pypi.org/simple" }
@@ -1082,7 +1040,6 @@ wheels = [
 ]
 
 [[package]]
->>>>>>> master
 name = "opencv-python"
 version = "4.11.0.86"
 source = { registry = "https://pypi.org/simple" }
@@ -1172,7 +1129,6 @@ wheels = [
 ]
 
 [[package]]
-<<<<<<< HEAD
 name = "portalocker"
 version = "3.2.0"
 source = { registry = "https://pypi.org/simple" }
@@ -1185,8 +1141,6 @@ wheels = [
 ]
 
 [[package]]
-=======
->>>>>>> master
 name = "protobuf"
 version = "7.34.0"
 source = { registry = "https://pypi.org/simple" }
@@ -1302,7 +1256,6 @@ wheels = [
 ]
 
 [[package]]
-<<<<<<< HEAD
 name = "pywin32"
 version = "311"
 source = { registry = "https://pypi.org/simple" }
@@ -1316,8 +1269,6 @@ wheels = [
 ]
 
 [[package]]
-=======
->>>>>>> master
 name = "pyyaml"
 version = "6.0.3"
 source = { registry = "https://pypi.org/simple" }
@@ -1404,8 +1355,6 @@ wheels = [
 ]
 
 [[package]]
-<<<<<<< HEAD
-=======
 name = "safetensors"
 version = "0.7.0"
 source = { registry = "https://pypi.org/simple" }
@@ -1428,7 +1377,6 @@ wheels = [
 ]
 
 [[package]]
->>>>>>> master
 name = "scipy"
 version = "1.17.1"
 source = { registry = "https://pypi.org/simple" }
@@ -1469,8 +1417,6 @@ wheels = [
 ]
 
 [[package]]
-<<<<<<< HEAD
-=======
 name = "shellingham"
 version = "1.5.4"
 source = { registry = "https://pypi.org/simple" }
@@ -1480,7 +1426,6 @@ wheels = [
 ]
 
 [[package]]
->>>>>>> master
 name = "simsimd"
 version = "6.5.13"
 source = { registry = "https://pypi.org/simple" }
@@ -1587,8 +1532,6 @@ wheels = [
 ]
 
 [[package]]
-<<<<<<< HEAD
-=======
 name = "timm"
 version = "1.0.25"
 source = { registry = "https://pypi.org/simple" }
@@ -1605,7 +1548,6 @@ wheels = [
 ]
 
 [[package]]
->>>>>>> master
 name = "torch"
 version = "2.6.0"
 source = { registry = "https://pypi.org/simple" }
@@ -1687,8 +1629,6 @@ wheels = [
 ]
 
 [[package]]
-<<<<<<< HEAD
-=======
 name = "typer"
 version = "0.24.1"
 source = { registry = "https://pypi.org/simple" }
@@ -1704,7 +1644,6 @@ wheels = [
 ]
 
 [[package]]
->>>>>>> master
 name = "typing-extensions"
 version = "4.15.0"
 source = { registry = "https://pypi.org/simple" }
@@ -1726,8 +1665,6 @@ wheels = [
 ]
 
 [[package]]
-<<<<<<< HEAD
-=======
 name = "wcwidth"
 version = "0.6.0"
 source = { registry = "https://pypi.org/simple" }
@@ -1737,7 +1674,6 @@ wheels = [
 ]
 
 [[package]]
->>>>>>> master
 name = "yapf"
 version = "0.43.0"
 source = { registry = "https://pypi.org/simple" }
