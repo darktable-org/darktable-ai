@@ -1,0 +1,21 @@
+id: mask-object-sam21-small
+name: "mask sam2.1 hiera small"
+description: "Segment Anything 2.1 (Hiera Small) for interactive masking"
+task: mask
+type: split
+dep_group: sam21
+
+repo:
+  submodule: vendor/sam2
+
+checkpoints:
+  - url: "https://dl.fbaipublicfiles.com/segment_anything_2/092824/sam2.1_hiera_small.pt"
+    path: "temp/mask-object-sam21-small/sam2.1_hiera_small.pt"
+
+convert:
+  - script: convert.py
+    args:
+      model_cfg: "configs/sam2.1/sam2.1_hiera_s.yaml"
+      checkpoint: "{temp}/sam2.1_hiera_small.pt"
+      output_dir: "{output}"
+      opset: 17

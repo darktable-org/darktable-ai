@@ -70,6 +70,10 @@ wheels = [
 ]
 
 [[package]]
+name = "antlr4-python3-runtime"
+version = "4.9.3"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/3e/38/7859ff46355f76f8d19459005ca000b6e7012f2f1ca597746cbcd1fbfe5e/antlr4-python3-runtime-4.9.3.tar.gz", hash = "sha256:f224469b4168294902bb1efa80a8bf7855f24c99aef99cbefc1bcd3cce77881b", size = 117034, upload-time = "2021-11-06T17:52:23.524Z" }
 name = "anyio"
 version = "4.12.1"
 source = { registry = "https://pypi.org/simple" }
@@ -172,11 +176,14 @@ dependencies = [
 all-models = [
     { name = "albumentations" },
     { name = "easydict" },
+    { name = "hydra-core" },
+    { name = "iopath" },
     { name = "mmcv" },
     { name = "numpy" },
     { name = "onnx" },
     { name = "onnxconverter-common" },
     { name = "onnxruntime" },
+    { name = "onnxsim" },
     { name = "onnxscript" },
     { name = "onnxsim" },
     { name = "open-clip-torch" },
@@ -226,6 +233,12 @@ nind = [
     { name = "torch" },
     { name = "torchvision" },
 ]
+sam21 = [
+    { name = "hydra-core" },
+    { name = "iopath" },
+    { name = "numpy" },
+    { name = "onnx" },
+    { name = "onnxruntime" },
 openclip = [
     { name = "numpy" },
     { name = "onnx" },
@@ -259,17 +272,20 @@ requires-dist = [
 all-models = [
     { name = "albumentations" },
     { name = "easydict" },
+    { name = "hydra-core", specifier = ">=1.3.2" },
+    { name = "iopath", specifier = ">=0.1.10" },
     { name = "mmcv", specifier = ">=2.2.0" },
     { name = "numpy", specifier = "<2.0" },
     { name = "onnx", specifier = ">=1.10.0" },
     { name = "onnxconverter-common" },
     { name = "onnxruntime" },
-    { name = "onnxscript" },
     { name = "onnxsim" },
-    { name = "open-clip-torch" },
     { name = "opencv-python" },
     { name = "setuptools" },
-    { name = "torch", specifier = ">=2.2.0,<2.7" },
+    { name = "torch", specifier = ">=2.5.1,<2.7" },
+    { name = "onnxscript" },
+    { name = "open-clip-torch" },
+    { name = "setuptools" },
     { name = "torchvision", specifier = ">=0.17.0,<0.22" },
 ]
 bsrgan = [
@@ -313,6 +329,15 @@ nind = [
     { name = "torch", specifier = ">=2.2.0,<2.7" },
     { name = "torchvision", specifier = ">=0.17.0,<0.22" },
 ]
+sam21 = [
+    { name = "hydra-core", specifier = ">=1.3.2" },
+    { name = "iopath", specifier = ">=0.1.10" },
+    { name = "numpy", specifier = "<2.0" },
+    { name = "onnx", specifier = ">=1.10.0" },
+    { name = "onnxruntime" },
+    { name = "opencv-python" },
+    { name = "torch", specifier = ">=2.2.0,<2.7" },
+    { name = "torch", specifier = ">=2.5.1" },
 openclip = [
     { name = "numpy", specifier = "<2.0" },
     { name = "onnx", specifier = ">=1.10.0" },
@@ -397,6 +422,29 @@ wheels = [
 ]
 
 [[package]]
+name = "hydra-core"
+version = "1.3.2"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "antlr4-python3-runtime" },
+    { name = "omegaconf" },
+    { name = "packaging" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/6d/8e/07e42bc434a847154083b315779b0a81d567154504624e181caf2c71cd98/hydra-core-1.3.2.tar.gz", hash = "sha256:8a878ed67216997c3e9d88a8e72e7b4767e81af37afb4ea3334b269a4390a824", size = 3263494, upload-time = "2023-02-23T18:33:43.03Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/c6/50/e0edd38dcd63fb26a8547f13d28f7a008bc4a3fd4eb4ff030673f22ad41a/hydra_core-1.3.2-py3-none-any.whl", hash = "sha256:fa0238a9e31df3373b35b0bfb672c34cc92718d21f81311d8996a16de1141d8b", size = 154547, upload-time = "2023-02-23T18:33:40.801Z" },
+]
+
+[[package]]
+name = "iopath"
+version = "0.1.10"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "portalocker" },
+    { name = "tqdm" },
+    { name = "typing-extensions" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/72/73/b3d451dfc523756cf177d3ebb0af76dc7751b341c60e2a21871be400ae29/iopath-0.1.10.tar.gz", hash = "sha256:3311c16a4d9137223e20f141655759933e1eda24f8bff166af834af3c645ef01", size = 42226, upload-time = "2022-07-09T19:00:50.866Z" }
 name = "ftfy"
 version = "6.3.1"
 source = { registry = "https://pypi.org/simple" }
@@ -847,6 +895,19 @@ wheels = [
 ]
 
 [[package]]
+name = "omegaconf"
+version = "2.3.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "antlr4-python3-runtime" },
+    { name = "pyyaml" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/09/48/6388f1bb9da707110532cb70ec4d2822858ddfb44f1cdf1233c20a80ea4b/omegaconf-2.3.0.tar.gz", hash = "sha256:d5d4b6d29955cc50ad50c46dc269bcd92c6e00f5f90d23ab5fee7bfca4ba4cc7", size = 3298120, upload-time = "2022-12-08T20:59:22.753Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/e3/94/1843518e420fa3ed6919835845df698c7e27e183cb997394e4a670973a65/omegaconf-2.3.0-py3-none-any.whl", hash = "sha256:7b4df175cdb08ba400f45cae3bdcae7ba8365db4d165fc65fd04b050ab63b46b", size = 79500, upload-time = "2022-12-08T20:59:19.686Z" },
+]
+
+[[package]]
 name = "onnx"
 version = "1.20.1"
 source = { registry = "https://pypi.org/simple" }
@@ -1068,6 +1129,18 @@ wheels = [
 ]
 
 [[package]]
+name = "portalocker"
+version = "3.2.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "pywin32", marker = "sys_platform == 'win32'" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/5e/77/65b857a69ed876e1951e88aaba60f5ce6120c33703f7cb61a3c894b8c1b6/portalocker-3.2.0.tar.gz", hash = "sha256:1f3002956a54a8c3730586c5c77bf18fae4149e07eaf1c29fc3faf4d5a3f89ac", size = 95644, upload-time = "2025-06-14T13:20:40.03Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/4b/a6/38c8e2f318bf67d338f4d629e93b0b4b9af331f455f0390ea8ce4a099b26/portalocker-3.2.0-py3-none-any.whl", hash = "sha256:3cdc5f565312224bc570c49337bd21428bba0ef363bbcf58b9ef4a9f11779968", size = 22424, upload-time = "2025-06-14T13:20:38.083Z" },
+]
+
+[[package]]
 name = "protobuf"
 version = "7.34.0"
 source = { registry = "https://pypi.org/simple" }
@@ -1183,6 +1256,19 @@ wheels = [
 ]
 
 [[package]]
+name = "pywin32"
+version = "311"
+source = { registry = "https://pypi.org/simple" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/7c/af/449a6a91e5d6db51420875c54f6aff7c97a86a3b13a0b4f1a5c13b988de3/pywin32-311-cp311-cp311-win32.whl", hash = "sha256:184eb5e436dea364dcd3d2316d577d625c0351bf237c4e9a5fabbcfa5a58b151", size = 8697031, upload-time = "2025-07-14T20:13:13.266Z" },
+    { url = "https://files.pythonhosted.org/packages/51/8f/9bb81dd5bb77d22243d33c8397f09377056d5c687aa6d4042bea7fbf8364/pywin32-311-cp311-cp311-win_amd64.whl", hash = "sha256:3ce80b34b22b17ccbd937a6e78e7225d80c52f5ab9940fe0506a1a16f3dab503", size = 9508308, upload-time = "2025-07-14T20:13:15.147Z" },
+    { url = "https://files.pythonhosted.org/packages/44/7b/9c2ab54f74a138c491aba1b1cd0795ba61f144c711daea84a88b63dc0f6c/pywin32-311-cp311-cp311-win_arm64.whl", hash = "sha256:a733f1388e1a842abb67ffa8e7aad0e70ac519e09b0f6a784e65a136ec7cefd2", size = 8703930, upload-time = "2025-07-14T20:13:16.945Z" },
+    { url = "https://files.pythonhosted.org/packages/e7/ab/01ea1943d4eba0f850c3c61e78e8dd59757ff815ff3ccd0a84de5f541f42/pywin32-311-cp312-cp312-win32.whl", hash = "sha256:750ec6e621af2b948540032557b10a2d43b0cee2ae9758c54154d711cc852d31", size = 8706543, upload-time = "2025-07-14T20:13:20.765Z" },
+    { url = "https://files.pythonhosted.org/packages/d1/a8/a0e8d07d4d051ec7502cd58b291ec98dcc0c3fff027caad0470b72cfcc2f/pywin32-311-cp312-cp312-win_amd64.whl", hash = "sha256:b8c095edad5c211ff31c05223658e71bf7116daa0ecf3ad85f3201ea3190d067", size = 9495040, upload-time = "2025-07-14T20:13:22.543Z" },
+    { url = "https://files.pythonhosted.org/packages/ba/3a/2ae996277b4b50f17d61f0603efd8253cb2d79cc7ae159468007b586396d/pywin32-311-cp312-cp312-win_arm64.whl", hash = "sha256:e286f46a9a39c4a18b319c28f59b61de793654af2f395c102b4f819e584b5852", size = 8710102, upload-time = "2025-07-14T20:13:24.682Z" },
+]
+
+[[package]]
 name = "pyyaml"
 version = "6.0.3"
 source = { registry = "https://pypi.org/simple" }
@@ -1215,6 +1301,11 @@ version = "2026.2.19"
 source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/ff/c0/d8079d4f6342e4cec5c3e7d7415b5cd3e633d5f4124f7a4626908dbe84c7/regex-2026.2.19.tar.gz", hash = "sha256:6fb8cb09b10e38f3ae17cc6dc04a1df77762bd0351b6ba9041438e7cc85ec310", size = 414973, upload-time = "2026-02-19T19:03:47.899Z" }
 wheels = [
+<<<<<<< HEAD
+    { url = "https://files.pythonhosted.org/packages/a8/4a/eae4e88b1317fb2ff57794915e0099198f51e760f6280b320adfa0ad396d/regex-2026.2.19-cp311-cp311-win32.whl", hash = "sha256:66e6a43225ff1064f8926adbafe0922b370d381c3330edaf9891cade52daa790", size = 266013, upload-time = "2026-02-19T19:00:47.274Z" },
+    { url = "https://files.pythonhosted.org/packages/f9/29/ba89eb8fae79705e07ad1bd69e568f776159d2a8093c9dbc5303ee618298/regex-2026.2.19-cp311-cp311-win_amd64.whl", hash = "sha256:59a7a5216485a1896c5800e9feb8ff9213e11967b482633b6195d7da11450013", size = 277906, upload-time = "2026-02-19T19:00:49.011Z" },
+    { url = "https://files.pythonhosted.org/packages/e3/1a/042d8f04b28e318df92df69d8becb0f42221eb3dd4fe5e976522f4337c76/regex-2026.2.19-cp311-cp311-win_arm64.whl", hash = "sha256:ec661807ffc14c8d14bb0b8c1bb3d5906e476bc96f98b565b709d03962ee4dd4", size = 270463, upload-time = "2026-02-19T19:00:50.988Z" },
+=======
     { url = "https://files.pythonhosted.org/packages/6f/93/43f405a98f54cc59c786efb4fc0b644615ed2392fc89d57d30da11f35b5b/regex-2026.2.19-cp311-cp311-macosx_10_9_universal2.whl", hash = "sha256:93b16a18cadb938f0f2306267161d57eb33081a861cee9ffcd71e60941eb5dfc", size = 488365, upload-time = "2026-02-19T19:00:17.857Z" },
     { url = "https://files.pythonhosted.org/packages/66/46/da0efce22cd8f5ae28eeb25ac69703f49edcad3331ac22440776f4ea0867/regex-2026.2.19-cp311-cp311-macosx_10_9_x86_64.whl", hash = "sha256:78af1e499cab704131f6f4e2f155b7f54ce396ca2acb6ef21a49507e4752e0be", size = 290737, upload-time = "2026-02-19T19:00:19.869Z" },
     { url = "https://files.pythonhosted.org/packages/fb/19/f735078448132c1c974974d30d5306337bc297fe6b6f126164bff72c1019/regex-2026.2.19-cp311-cp311-macosx_11_0_arm64.whl", hash = "sha256:eb20c11aa4c3793c9ad04c19a972078cdadb261b8429380364be28e867a843f2", size = 288654, upload-time = "2026-02-19T19:00:21.307Z" },
@@ -1244,6 +1335,7 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/85/77/ff1d25a0c56cd546e0455cbc93235beb33474899690e6a361fa6b52d265b/regex-2026.2.19-cp312-cp312-musllinux_1_2_riscv64.whl", hash = "sha256:6bc25d7e15f80c9dc7853cbb490b91c1ec7310808b09d56bd278fe03d776f4f6", size = 764153, upload-time = "2026-02-19T19:01:12.156Z" },
     { url = "https://files.pythonhosted.org/packages/cd/ef/8ec58df26d52d04443b1dc56f9be4b409f43ed5ae6c0248a287f52311fc4/regex-2026.2.19-cp312-cp312-musllinux_1_2_s390x.whl", hash = "sha256:965d59792f5037d9138da6fed50ba943162160443b43d4895b182551805aff9c", size = 850348, upload-time = "2026-02-19T19:01:14.147Z" },
     { url = "https://files.pythonhosted.org/packages/f5/b3/c42fd5ed91639ce5a4225b9df909180fc95586db071f2bf7c68d2ccbfbe6/regex-2026.2.19-cp312-cp312-musllinux_1_2_x86_64.whl", hash = "sha256:38d88c6ed4a09ed61403dbdf515d969ccba34669af3961ceb7311ecd0cef504a", size = 789977, upload-time = "2026-02-19T19:01:15.838Z" },
+>>>>>>> master
     { url = "https://files.pythonhosted.org/packages/b6/22/bc3b58ebddbfd6ca5633e71fd41829ee931963aad1ebeec55aad0c23044e/regex-2026.2.19-cp312-cp312-win32.whl", hash = "sha256:5df947cabab4b643d4791af5e28aecf6bf62e6160e525651a12eba3d03755e6b", size = 266381, upload-time = "2026-02-19T19:01:17.952Z" },
     { url = "https://files.pythonhosted.org/packages/fc/4a/6ff550b63e67603ee60e69dc6bd2d5694e85046a558f663b2434bdaeb285/regex-2026.2.19-cp312-cp312-win_amd64.whl", hash = "sha256:4146dc576ea99634ae9c15587d0c43273b4023a10702998edf0fa68ccb60237a", size = 277274, upload-time = "2026-02-19T19:01:19.826Z" },
     { url = "https://files.pythonhosted.org/packages/cc/29/9ec48b679b1e87e7bc8517dff45351eab38f74fbbda1fbcf0e9e6d4e8174/regex-2026.2.19-cp312-cp312-win_arm64.whl", hash = "sha256:cdc0a80f679353bd68450d2a42996090c30b2e15ca90ded6156c31f1a3b63f3b", size = 270509, upload-time = "2026-02-19T19:01:22.075Z" },
