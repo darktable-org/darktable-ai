@@ -1,0 +1,13 @@
+id: embed-openclip-vitb32
+name: "embed openclip vitb32"
+description: "OpenCLIP ViT-B-32 image embeddings for tagging and similarity"
+task: embed
+type: single
+dep_group: openclip
+
+convert:
+  - script: convert.py
+    args:
+      output: "{output}/model.onnx"
+      tags_output: "{output}/tags.json"
+      opset: 17
