@@ -1,11 +1,7 @@
 id: mask-object-segnext-b2hq
 name: "mask segnext vitb-sax2 hq"
 description: "SegNext ViT-B SAx2 HQ fine-tuned for interactive masking"
-<<<<<<< HEAD
 task: mask
-=======
-task: mask-object
->>>>>>> master
 type: split
 dep_group: segnext
 
