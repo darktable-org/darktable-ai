@@ -238,7 +238,8 @@ sam21 = [
     { name = "iopath" },
     { name = "numpy" },
     { name = "onnx" },
-    { name = "onnxruntime" },
+    { name = "onnxruntime" }
+]
 openclip = [
     { name = "numpy" },
     { name = "onnx" },
@@ -337,7 +338,8 @@ sam21 = [
     { name = "onnxruntime" },
     { name = "opencv-python" },
     { name = "torch", specifier = ">=2.2.0,<2.7" },
-    { name = "torch", specifier = ">=2.5.1" },
+    { name = "torch", specifier = ">=2.5.1" }
+]
 openclip = [
     { name = "numpy", specifier = "<2.0" },
     { name = "onnx", specifier = ">=1.10.0" },
