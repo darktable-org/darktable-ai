@@ -2,6 +2,7 @@ id: mask-object-sam21-small
 name: "mask sam2.1 hiera small"
 description: "Segment Anything 2.1 (Hiera Small) for interactive masking"
 task: mask
+arch: sam2
 type: split
 dep_group: sam21
 
