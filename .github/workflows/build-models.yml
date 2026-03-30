@@ -72,6 +72,17 @@ jobs:
     if: always() && !cancelled()
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v5
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Generate versions.json
+        run: uv run dtai versions
+
       - uses: actions/download-artifact@v4
         with:
           path: artifacts
@@ -85,3 +96,5 @@ jobs:
             echo "Uploading $(basename "$pkg")..."
             gh release upload "${{ github.event.release.tag_name }}" "$pkg" --repo "$GH_REPO"
           done
+          echo "Uploading versions.json..."
+          gh release upload "${{ github.event.release.tag_name }}" output/versions.json --repo "$GH_REPO"

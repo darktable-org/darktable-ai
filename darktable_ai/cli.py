@@ -200,6 +200,26 @@ def list_models(ctx, as_json):
             click.echo(f"  {config.id:<35} {config.task:<15} {config.description}{status}")
 
 
+@main.command("versions")
+@click.pass_context
+def versions(ctx):
+    """Generate versions.json from model.yaml files."""
+    root = _get_root(ctx)
+    models = discover_models(root)
+    data = {
+        "models": {
+            m.id: m.version
+            for m in sorted(models, key=lambda m: m.id)
+            if not m.skip
+        }
+    }
+    output_path = root / "output" / "versions.json"
+    with open(output_path, "w") as f:
+        json.dump(data, f, indent=2)
+        f.write("\n")
+    click.echo(f"Generated {output_path}")
+
+
 @main.command("eval")
 @click.argument("task")
 @click.argument("model_id")
