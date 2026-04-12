@@ -46,7 +46,10 @@ def generate_config_json(config: ModelConfig) -> None:
         "tiling": config.tiling,
     }
 
-    config_file.write_text(json.dumps(data, indent=4) + "\n")
+    if config.model_card:
+        data["model_card"] = config.model_card
+
+    config_file.write_text(json.dumps(data, indent=4, ensure_ascii=False) + "\n")
     print(f"  Generated: {config_file}")
 
 

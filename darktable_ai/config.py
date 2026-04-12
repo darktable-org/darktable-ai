@@ -44,6 +44,8 @@ class ModelConfig:
     dep_group: str = "core"
     skip: bool = False
 
+    model_card: dict[str, str] = field(default_factory=dict)
+
     repo: RepoConfig | None = None
     checkpoints: list[Checkpoint] = field(default_factory=list)
     convert: list[ConvertStep] = field(default_factory=list)
@@ -115,6 +117,7 @@ def load_model_config(model_dir: Path, root_dir: Path) -> ModelConfig:
         arch=data.get("arch", "generic"),
         tiling=data.get("tiling", False),
         dep_group=data.get("dep_group", "core"),
+        model_card=data.get("model_card", {}),
         skip=skip,
         repo=repo,
         checkpoints=checkpoints,

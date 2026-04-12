@@ -7,6 +7,17 @@ tiling: true
 type: multi
 dep_group: bsrgan
 
+model_card:
+  long_description: "BSRGAN blind image super-resolution using practical degradation model; includes both 2x and 4x upscaling variants with RRDBNet architecture"
+  scope: "image upscaling (2x and 4x blind super-resolution)"
+  author: "Kai Zhang (ETH Zurich)"
+  source: "https://github.com/cszn/BSRGAN"
+  paper: "https://arxiv.org/abs/2103.14006"
+  license: "Apache-2.0"
+  training_data: "DIV2K, Flickr2K, WED, OST – standard SR research datasets with synthetic practical degradation"
+  training_data_license: "DIV2K: CC0; Flickr2K, WED, OST: no explicit open-source licenses"
+  notes: "training datasets Flickr2K/WED/OST do not have explicit open-source licenses"
+
 checkpoints:
   - url: "https://github.com/cszn/KAIR/releases/download/v1.0/BSRGAN.pth"
     path: "temp/upscale-bsrgan/BSRGAN.pth"

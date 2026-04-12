@@ -7,6 +7,17 @@ tiling: true
 type: single
 dep_group: nafnet
 
+model_card:
+  long_description: "NAFNet (Nonlinear Activation Free Network) lightweight denoiser trained on the SIDD smartphone denoising dataset"
+  scope: "single-image denoising"
+  author: "Megvii Research"
+  source: "https://github.com/megvii-research/NAFNet"
+  paper: "https://arxiv.org/abs/2204.04676"
+  license: "MIT"
+  training_data: "SIDD – 30K real smartphone noisy/clean pairs captured by authors (5 devices)"
+  training_data_license: "MIT"
+  notes: "all components publicly available under permissive licenses"
+
 repo:
   submodule: vendor/NAFNet
   setup: "python setup.py develop --no_cuda_ext"

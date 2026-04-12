@@ -7,6 +7,17 @@ arch: sam2
 type: split
 dep_group: sam21
 
+model_card:
+  long_description: "Segment Anything Model 2.1 with Hiera Base Plus encoder for interactive object segmentation"
+  scope: "interactive object segmentation"
+  author: "Meta (Facebook Research)"
+  source: "https://github.com/facebookresearch/sam2"
+  paper: "https://arxiv.org/abs/2408.00714"
+  license: "Apache-2.0"
+  training_data: "SA-V (50.9K videos) + SA-1B (11M stock images)"
+  training_data_license: "SA-V: CC BY 4.0; SA-1B: custom Meta research-only license"
+  notes: "model weights are Apache-2.0; SA-1B training data has a separate research-only license from Meta"
+
 repo:
   submodule: vendor/sam2
 

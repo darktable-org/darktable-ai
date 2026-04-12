@@ -6,6 +6,17 @@ version: "1.0"
 type: single
 dep_group: openclip
 
+model_card:
+  long_description: "Vision Transformer (ViT-B/32) image encoder from the OpenCLIP project; produces 512-dimensional embeddings used for auto-tagging and image similarity search"
+  scope: "image feature extraction for tagging and similarity"
+  author: "LAION (Ilharco, Wortsman, Carlini et al.)"
+  source: "https://github.com/mlfoundations/open_clip"
+  paper: "https://arxiv.org/abs/2212.07143"
+  license: "MIT"
+  training_data: "LAION-2B: 2B image-text pairs from Common Crawl, filtered using CLIP for quality"
+  training_data_license: "CC-BY-4.0 metadata; images are web-crawled with mixed licenses"
+  notes: "training images are web-crawled; individual image licenses are not verified; narrow feature extractor, does not generate or modify images"
+
 convert:
   - script: convert.py
     args:
