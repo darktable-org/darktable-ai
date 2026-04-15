@@ -26,6 +26,15 @@ core = [
 nafnet = [
     {include-group = "core"},
     "onnxconverter-common",
+    "addict",
+    "lmdb",
+    "scikit-image",
+    "scipy",
+    "tqdm",
+    "yapf",
+    "requests",
+    "future",
+    "tb-nightly",
 ]
 nind = [
     {include-group = "core"},

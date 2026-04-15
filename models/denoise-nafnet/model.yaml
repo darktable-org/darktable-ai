@@ -3,9 +3,13 @@ name: "denoise nafnet small"
 description: "NAFNet denoiser trained on SIDD dataset"
 task: denoise
 version: "1.0"
+arch: nafnet
 tiling: true
 type: single
 dep_group: nafnet
+
+attributes:
+  shadow_boost: true
 
 model_card:
   long_description: "NAFNet (Nonlinear Activation Free Network) lightweight denoiser trained on the SIDD smartphone denoising dataset"
@@ -20,7 +24,6 @@ model_card:
 
 repo:
   submodule: vendor/NAFNet
-  setup: "python setup.py develop --no_cuda_ext"
 
 checkpoints:
   - url: "https://drive.google.com/file/d/1lsByk21Xw-6aW7epCwOQxvm6HYCQZPHZ/view?usp=sharing"
@@ -33,4 +36,4 @@ convert:
       checkpoint: "{temp}/NAFNet-SIDD-width32.pth"
       output: "{output}/model.onnx"
       opset: 17
-      fp16: true
+      fp16: false
