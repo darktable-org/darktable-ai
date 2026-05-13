@@ -336,7 +336,7 @@ def verify_model(model_path, dummy_inputs, name):
     print(f"{name} has successfully been run with ONNXRuntime.")
 
 
-def convert(model_cfg, checkpoint, output_dir, opset=17):
+def convert(model_cfg, checkpoint, output_dir, opset=20):
     """Entry point for programmatic conversion."""
     os.makedirs(output_dir, exist_ok=True)
     encoder_path = os.path.join(output_dir, "encoder.onnx")
@@ -373,8 +373,8 @@ def main():
                         help="Path to the SAM 2.1 model checkpoint (.pt).")
     parser.add_argument("--output-dir", type=str, required=True,
                         help="Output directory for encoder.onnx and decoder.onnx.")
-    parser.add_argument("--opset", type=int, default=17,
-                        help="ONNX opset version (default: 17).")
+    parser.add_argument("--opset", type=int, default=20,
+                        help="ONNX opset version (default: 20).")
     args = parser.parse_args()
 
     convert(args.model_cfg, args.checkpoint, args.output_dir, opset=args.opset)

@@ -22,4 +22,4 @@ convert:
     args:
       output: "{output}/model.onnx"
       tags_output: "{output}/tags.json"
-      opset: 17
+      opset: 20

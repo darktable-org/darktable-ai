@@ -30,3 +30,4 @@ convert:
     args:
       checkpoint: "{temp}/vitb_sa2_cocolvis_hq44k_epoch_0.pth"
       output_dir: "{output}"
+      opset: 20

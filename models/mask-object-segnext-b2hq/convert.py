@@ -50,8 +50,8 @@ parser.add_argument(
     help="Output directory for encoder.onnx and decoder.onnx.",
 )
 parser.add_argument(
-    "--opset", type=int, default=17,
-    help="ONNX opset version (default: 17).",
+    "--opset", type=int, default=20,
+    help="ONNX opset version (default: 20).",
 )
 
 
@@ -341,7 +341,7 @@ def run_decoder_export(model, output, opset, image_feats):
 # Main
 # ---------------------------------------------------------------------------
 
-def convert(checkpoint, output_dir, opset=17):
+def convert(checkpoint, output_dir, opset=20):
     """Entry point for programmatic conversion."""
     os.makedirs(output_dir, exist_ok=True)
     encoder_path = os.path.join(output_dir, "encoder.onnx")

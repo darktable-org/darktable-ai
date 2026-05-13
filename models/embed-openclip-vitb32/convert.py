@@ -231,7 +231,7 @@ def generate_tags(model, tokenizer, output_path):
 # Main
 # ---------------------------------------------------------------------------
 
-def convert(output, tags_output, opset=17):
+def convert(output, tags_output, opset=20):
     """Entry point for programmatic conversion."""
     os.makedirs(os.path.dirname(output) or ".", exist_ok=True)
 
@@ -257,7 +257,7 @@ def main():
     )
     parser.add_argument("--output", required=True, help="Output ONNX path")
     parser.add_argument("--tags-output", required=True, help="Output tags.json path")
-    parser.add_argument("--opset", type=int, default=17, help="ONNX opset version")
+    parser.add_argument("--opset", type=int, default=20, help="ONNX opset version")
     args = parser.parse_args()
 
     convert(args.output, args.tags_output, args.opset)

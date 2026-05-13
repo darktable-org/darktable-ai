@@ -31,4 +31,4 @@ convert:
       model_cfg: "configs/sam2.1/sam2.1_hiera_s.yaml"
       checkpoint: "{temp}/sam2.1_hiera_small.pt"
       output_dir: "{output}"
-      opset: 17
+      opset: 20
