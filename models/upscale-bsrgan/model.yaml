@@ -2,7 +2,7 @@ id: upscale-bsrgan
 name: "upscale bsrgan"
 description: "BSRGAN 2x and 4x blind super-resolution"
 task: upscale
-version: "1.0"
+version: "0.1"
 backend: onnx
 tiling: true
 type: multi

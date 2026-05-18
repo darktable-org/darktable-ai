@@ -2,7 +2,7 @@ id: mask-object-sam21-base-plus
 name: "mask sam2.1 hiera base plus"
 description: "Segment Anything 2.1 (Hiera Base Plus) for interactive masking"
 task: mask
-version: "1.0"
+version: "0.1"
 arch: sam2
 type: split
 dep_group: sam21
