@@ -1,27 +1,36 @@
-name: Check Models
+name: Check Models PR
 
 on:
   pull_request:
-    branches: [master]
-  push:
-    branches: [master]
+    branches: [master, 'models-*.x']
+  workflow_dispatch:
+
+# one check per PR; new pushes cancel the previous run
+concurrency:
+  group: check-pr-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 
 permissions:
   contents: read
 
 jobs:
   discover:
+    # auto on upstream only; forks opt in via the Actions UI
+    if: github.repository == 'darktable-org/darktable-ai' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     outputs:
       models: ${{ steps.find.outputs.models }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           submodules: true
 
-      - uses: astral-sh/setup-uv@v5
+      - uses: astral-sh/setup-uv@v8.1.0
+        with:
+          enable-cache: true
+          cache-dependency-glob: "uv.lock"
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
 
@@ -37,7 +46,7 @@ jobs:
 
   check:
     needs: discover
-    if: ${{ needs.discover.outputs.models != '[]' }}
+    if: ${{ needs.discover.outputs.models != '[]' && (github.repository == 'darktable-org/darktable-ai' || github.event_name == 'workflow_dispatch') }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -45,13 +54,16 @@ jobs:
         include: ${{ fromJson(needs.discover.outputs.models) }}
     name: ${{ matrix.id }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           submodules: true
 
-      - uses: astral-sh/setup-uv@v5
+      - uses: astral-sh/setup-uv@v8.1.0
+        with:
+          enable-cache: true
+          cache-dependency-glob: "uv.lock"
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
 

@@ -5,7 +5,6 @@ __pycache__/
 *.so
 *.egg-info/
 *.egg
-uv.lock
 dist/
 build/
 

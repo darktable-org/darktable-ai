@@ -1,0 +1,189 @@
+name: Nightly Models
+run-name: Nightly Models
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - 'models/**'
+      - '.github/workflows/nightly.yml'
+  workflow_dispatch:
+
+# one nightly at a time; new master pushes cancel the previous run
+concurrency:
+  group: nightly
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  discover:
+    # auto on upstream only; forks opt in via the Actions UI
+    if: github.repository == 'darktable-org/darktable-ai' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    outputs:
+      models: ${{ steps.find.outputs.models }}
+      dt_version: ${{ steps.dt.outputs.version }}
+      dt_prefix: ${{ steps.dt.outputs.prefix }}
+      is_dev: ${{ steps.dt.outputs.is_dev }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          submodules: true
+          fetch-depth: 0  # need tags for git describe
+
+      - uses: astral-sh/setup-uv@v8.1.0
+        with:
+          enable-cache: true
+          cache-dependency-glob: "uv.lock"
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - id: find
+        name: Discover models
+        run: |
+          models=$(uv run dtai list --json-output)
+          echo "models=$models" >> "$GITHUB_OUTPUT"
+
+      - id: dt
+        name: Derive nightly version from our own release-* tags
+        run: |
+          VERSION=$(./tools/get_git_version_string.sh)
+          # X.Y.Z prefix only — used as the nightly tag so darktable's
+          # release-discovery code parses it as a valid version
+          PREFIX=$(echo "$VERSION" | sed 's/[+~].*//' | awk -F. '{printf "%s.%s.%s", $1, $2, $3}')
+          # only publish on dev cycles (odd minor); even minor = stable
+          # line or hotfix branch, skip
+          MINOR=$(echo "$PREFIX" | awk -F. '{print $2}')
+          IS_DEV=false
+          case "$MINOR" in
+            1|3|5|7|9) IS_DEV=true ;;
+          esac
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "prefix=$PREFIX" >> "$GITHUB_OUTPUT"
+          echo "is_dev=$IS_DEV" >> "$GITHUB_OUTPUT"
+          echo "::notice::nightly version $PREFIX (is_dev=$IS_DEV)"
+
+  build:
+    needs: discover
+    if: needs.discover.outputs.is_dev == 'true' && (github.repository == 'darktable-org/darktable-ai' || github.event_name == 'workflow_dispatch')
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include: ${{ fromJson(needs.discover.outputs.models) }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          submodules: true
+
+      - uses: astral-sh/setup-uv@v8.1.0
+        with:
+          enable-cache: true
+          cache-dependency-glob: "uv.lock"
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: uv sync --group ${{ matrix.dep_group }}
+
+      - name: Download checkpoints
+        run: uv run dtai setup ${{ matrix.id }}
+
+      - name: Convert to ONNX
+        run: uv run dtai convert ${{ matrix.id }}
+
+      - name: Validate output
+        run: uv run dtai validate ${{ matrix.id }}
+
+      - name: Package model
+        run: uv run dtai package ${{ matrix.id }}
+
+      - uses: actions/upload-artifact@v7
+        with:
+          name: ${{ matrix.id }}
+          path: output/${{ matrix.id }}.dtmodel
+          retention-days: 1
+
+  publish:
+    needs: [discover, build]
+    # require dev cycle and every matrix member to succeed
+    if: ${{ !cancelled() && needs.discover.outputs.is_dev == 'true' && needs.build.result == 'success' && (github.repository == 'darktable-org/darktable-ai' || github.event_name == 'workflow_dispatch') }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: astral-sh/setup-uv@v8.1.0
+        with:
+          enable-cache: true
+          cache-dependency-glob: "uv.lock"
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Generate versions.json
+        run: uv run dtai versions
+
+      - uses: actions/download-artifact@v8
+        with:
+          path: artifacts
+
+      # delete all nightly-* releases so the next publish creates a
+      # fresh one with a new created_at — keeps it at the top of
+      # /releases. updating in place keeps the original timestamp
+      - name: Remove existing nightly releases
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          for old in $(gh release list --json tagName \
+                         -q '.[].tagName' | grep '^nightly-' || true); do
+            gh release delete "$old" --yes --cleanup-tag
+          done
+
+      # recreate nightly-X.Y.Z at HEAD; delete-first handles orphan tags
+      - name: Force move nightly tag
+        env:
+          NIGHTLY_TAG: nightly-${{ needs.discover.outputs.dt_prefix }}
+        run: |
+          git tag -d "$NIGHTLY_TAG" 2>/dev/null || true
+          git push origin --delete "$NIGHTLY_TAG" 2>/dev/null || true
+          git tag "$NIGHTLY_TAG"
+          git push origin "$NIGHTLY_TAG"
+
+      # build date in the release title, so users can tell at a glance
+      # how fresh the artifacts are. version info still ships in the body
+      - name: Get build date
+        id: date
+        run: echo "date=$(date +'%Y%m%d')" >> "$GITHUB_OUTPUT"
+
+      - name: Publish nightly release
+        uses: ncipollo/release-action@v1.21.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag: nightly-${{ needs.discover.outputs.dt_prefix }}
+          name: "nightly models build ${{ steps.date.outputs.date }}"
+          prerelease: true
+          allowUpdates: true     # roll the same pre-release each run
+          removeArtifacts: true  # wipe stale .dtmodel assets first
+          # hide as draft if dispatched from a tag ref (defensive)
+          draft: ${{ startsWith(github.ref, 'refs/tags/') }}
+          body: |
+            Version: `${{ needs.discover.outputs.dt_version }}` (targets darktable ${{ needs.discover.outputs.dt_prefix }})
+
+            This is a nightly build of darktable AI models, tracking the `master` branch of `darktable-ai`. It is rebuilt automatically whenever a model definition changes.
+
+            You can use these if you want to try new or updated models without waiting for an official release. New checkpoints, format changes and packaging tweaks all land here first. The trade-off is the usual one – things move faster, things break more often, and behaviour can change between runs. **Use with caution.**
+
+            To install, open *preferences → AI* in your nightly darktable build and download the models you want. Existing installations will pick up the update via the version check.
+
+            __Please help us improve the models by reporting any issues you encounter!__ :wink:
+          artifacts: |
+            artifacts/*/*.dtmodel
+            output/versions.json
