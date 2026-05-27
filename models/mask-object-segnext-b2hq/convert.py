@@ -217,7 +217,10 @@ def to_numpy(tensor):
 
 def load_segnext_model(checkpoint_path):
     """Load SegNext model from checkpoint."""
-    state_dict = torch.load(checkpoint_path, map_location="cpu")
+    # weights_only=False: checkpoint stores a non-tensor "config" object
+    # alongside the weights, which PyTorch 2.6's weights_only=True default
+    # rejects. Trusted file we ship, so full unpickling is safe.
+    state_dict = torch.load(checkpoint_path, map_location="cpu", weights_only=False)
     model = load_model(state_dict["config"])
     model.load_state_dict(state_dict["state_dict"], strict=True)
     for param in model.parameters():

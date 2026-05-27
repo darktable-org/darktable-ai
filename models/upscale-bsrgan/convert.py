@@ -154,7 +154,10 @@ def convert(checkpoint, output, scale, height=256, width=256,
 
     print(f"Loading BSRGAN model (scale={scale})...")
     model = RRDBNet(in_nc=3, out_nc=3, nf=64, nb=23, gc=32, sf=scale)
-    state_dict = torch.load(checkpoint, map_location='cpu')
+    # weights_only=False for consistency with the other converters; this
+    # is a trusted checkpoint we ship. PyTorch 2.6 made weights_only=True
+    # the default, which can reject checkpoints carrying non-tensor data.
+    state_dict = torch.load(checkpoint, map_location='cpu', weights_only=False)
     model.load_state_dict(state_dict, strict=True)
     model.eval()
 

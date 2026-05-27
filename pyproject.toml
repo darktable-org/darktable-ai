@@ -21,7 +21,12 @@ core = [
     "onnx>=1.10.0",
     "onnxruntime",
     "onnxsim",
-    "opencv-python",
+    # headless, not opencv-python: albumentations/albucore pull
+    # opencv-python-headless, and both variants install into the same
+    # cv2/ namespace. Two of them race over cv2/__init__.py and CI ends
+    # up with a half-written package (cv2.imread missing). We use no GUI
+    # calls, so headless is the single consistent variant.
+    "opencv-python-headless",
 ]
 nafnet = [
     {include-group = "core"},
@@ -86,6 +91,15 @@ eval = [
     "Pillow",
     "scipy",
 ]
+
+[tool.uv]
+# mmcv/mmengine require opencv-python while albumentations/albucore
+# require opencv-python-headless; both install into the same cv2/
+# namespace and race over cv2/__init__.py, leaving a half-written
+# package on CI (cv2.imread missing). Force the headless variant
+# everywhere — mmcv imports cv2 too and we use no GUI calls — so the
+# shared venv only ever has one opencv.
+override-dependencies = ["opencv-python; sys_platform == 'never'"]
 
 [tool.uv.extra-build-dependencies]
 mmcv = ["setuptools<71"]

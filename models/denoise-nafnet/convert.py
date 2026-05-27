@@ -49,7 +49,10 @@ def load_nafnet_model(config_path, checkpoint_path):
         dec_blk_nums=network_g.get('dec_blk_nums', [2, 2, 2, 2])
     )
 
-    checkpoint = torch.load(checkpoint_path, map_location='cpu')
+    # weights_only=False: PyTorch 2.6 flipped this default to True, which
+    # rejects the NAFNet checkpoint (it pickles non-tensor objects). The
+    # checkpoint is a trusted file we ship, so full unpickling is safe.
+    checkpoint = torch.load(checkpoint_path, map_location='cpu', weights_only=False)
     if 'params' in checkpoint:
         state_dict = checkpoint['params']
     elif 'params_ema' in checkpoint:
