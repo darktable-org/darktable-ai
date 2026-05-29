@@ -71,11 +71,6 @@ sam21 = [
     "hydra-core>=1.3.2",
     "iopath>=0.1.10",
 ]
-openclip = [
-    {include-group = "core"},
-    "open_clip_torch",
-    "onnxscript",
-]
 all-models = [
     {include-group = "nafnet"},
     {include-group = "nind"},
@@ -83,7 +78,6 @@ all-models = [
     {include-group = "segnext"},
     {include-group = "bsrgan"},
     {include-group = "sam21"},
-    {include-group = "openclip"},
 ]
 eval = [
     "numpy<2.0",

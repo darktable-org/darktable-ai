@@ -10,7 +10,6 @@ Currently targets the ONNX backend. The pipeline is designed to support addition
 |-------------------------------------------------------------------------------|---------|-------------------------------------------------|
 | [`denoise-nafnet`](models/denoise-nafnet/README.md)                           | denoise | NAFNet denoiser trained on SIDD dataset         |
 | [`denoise-nind`](models/denoise-nind/README.md)                               | denoise | UNet denoiser trained on NIND dataset           |
-| [`embed-openclip-vitb32`](models/embed-openclip-vitb32/README.md)             | embed   | OpenCLIP ViT-B/32 text/image embeddings         |
 | [`mask-object-sam21-base-plus`](models/mask-object-sam21-base-plus/README.md) | mask    | SAM 2.1 Hiera Base Plus for interactive masking |
 | [`mask-object-sam21-small`](models/mask-object-sam21-small/README.md)         | mask    | SAM 2.1 Hiera Small for interactive masking     |
 | [`mask-object-sam21-tiny`](models/mask-object-sam21-tiny/README.md)           | mask    | SAM 2.1 Hiera Tiny for interactive masking      |
@@ -232,3 +231,9 @@ Each model directory must include a `README.md` documenting:
 | Reproducibility          | Full pipeline      |
 
 See existing model READMEs for examples.
+
+Wiki
+----
+
+* [GitHub wiki](https://github.com/darktable-org/darktable-ai/wiki "github wiki")
+* [Developer wiki](https://github.com/darktable-org/darktable-ai/wiki/Developers-portal "darktable-ai developer wiki")
