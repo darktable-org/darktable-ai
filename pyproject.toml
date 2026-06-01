@@ -65,6 +65,12 @@ segnext = [
 bsrgan = [
     {include-group = "core"},
 ]
+realplksr = [
+    {include-group = "core"},
+    "onnxconverter-common",
+    "spandrel>=0.4.0",
+    "safetensors",
+]
 sam21 = [
     {include-group = "core"},
     "torch>=2.5.1",
@@ -77,6 +83,7 @@ all-models = [
     {include-group = "rawnind"},
     {include-group = "segnext"},
     {include-group = "bsrgan"},
+    {include-group = "realplksr"},
     {include-group = "sam21"},
 ]
 eval = [

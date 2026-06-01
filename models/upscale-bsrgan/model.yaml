@@ -2,7 +2,7 @@ id: upscale-bsrgan
 name: "upscale bsrgan"
 description: "BSRGAN 2x and 4x blind super-resolution"
 task: upscale
-version: "0.1"
+version: "0.2"
 backend: onnx
 tiling: true
 type: multi
@@ -17,7 +17,7 @@ attributes:
     input_sizes: [256]
 
 model_card:
-  long_description: "BSRGAN blind image super-resolution using practical degradation model; includes both 2x and 4x upscaling variants with RRDBNet architecture"
+  long_description: "BSRGAN (Blind Super-Resolution GAN). 2x or 4x photo upscaling that also cleans up noise, JPEG artefacts, and mild blur. Best for high-ISO captures, scanned negatives or prints, and other less-than-pristine source photos"
   scope: "image upscaling (2x and 4x blind super-resolution)"
   author: "Kai Zhang (ETH Zurich)"
   source: "https://github.com/cszn/BSRGAN"

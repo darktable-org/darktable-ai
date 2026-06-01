@@ -1,0 +1,59 @@
+id: upscale-realplksr
+name: "upscale realplksr"
+description: "RealPLKSR 2x and 4x super-resolution, robust to typical photo artefacts (noise, blur, compression)"
+task: upscale
+version: "0.2"
+backend: onnx
+tiling: true
+type: multi
+dep_group: realplksr
+coreml_format: mlprogram
+
+attributes:
+  # RealPLKSR is a pure-CNN architecture (Partial Large Kernel) with no
+  # window-attention constraints; any input multiple of 4 works. Tile
+  # sizes match BSRGAN's pattern for predictable cost — x2 from 512,
+  # x4 from 256, both emitting 1024x1024 output tiles.
+  model_x2:
+    input_sizes: [512]
+  model_x4:
+    input_sizes: [256]
+
+model_card:
+  long_description: "RealPLKSR (Real-world Partial Large Kernel CNN for SR). Faithful 2x or 4x upscaling that preserves detail without smoothing or inventing texture. Best for clean sources like edited RAW exports or high-quality scans"
+  scope: "image upscaling (2x and 4x super-resolution, robust to noise/blur/compression artefacts)"
+  author: "Dongheon Lee et al. (Machine Intelligence Laboratory, University of Seoul)"
+  source: "https://github.com/dslisleedh/PLKSR"
+  paper: "https://arxiv.org/abs/2404.11848"
+  license: "MIT"
+  training_data: "realistic degradation pipeline (neosr framework)"
+  training_data_license: "see neosr / RealESRGAN degradation references"
+  notes: "trained on DF2K (DIV2K + Flickr2K) per neosr common practice; Flickr2K does not carry an explicit open-source license"
+
+checkpoints:
+  - url: "https://drive.google.com/file/d/1GAdf5VOqYa5ntswT9sYsKKZ2Z7OQp7gO/view"
+    path: "temp/upscale-realplksr/2x_realplksr_mssim_pretrain.pth"
+  - url: "https://drive.google.com/file/d/12ek1vitEporWc5qqaYo6AMy0-RYlRqu8/view"
+    path: "temp/upscale-realplksr/4x_realplksr_mssim_pretrain.pth"
+
+convert:
+  - script: convert.py
+    args:
+      checkpoint: "{temp}/2x_realplksr_mssim_pretrain.pth"
+      output: "{output}/model_x2.onnx"
+      scale: 2
+      opset: 20
+      height: 512
+      width: 512
+      static: true
+      fp16: false
+  - script: convert.py
+    args:
+      checkpoint: "{temp}/4x_realplksr_mssim_pretrain.pth"
+      output: "{output}/model_x4.onnx"
+      scale: 4
+      opset: 20
+      height: 256
+      width: 256
+      static: true
+      fp16: false
