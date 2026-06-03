@@ -2,7 +2,8 @@ id: denoise-nind
 name: "denoise nind"
 description: "UNet denoiser trained on NIND dataset"
 task: denoise
-version: "0.2"
+version: "1.0"
+arch: unet
 backend: onnx
 tiling: true
 type: single

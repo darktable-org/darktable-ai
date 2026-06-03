@@ -2,7 +2,8 @@ id: upscale-realplksr
 name: "upscale realplksr"
 description: "RealPLKSR 2x and 4x super-resolution, robust to typical photo artefacts (noise, blur, compression)"
 task: upscale
-version: "0.2"
+version: "1.0"
+arch: plksr
 backend: onnx
 tiling: true
 type: multi
