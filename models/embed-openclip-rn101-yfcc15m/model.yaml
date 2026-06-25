@@ -1,0 +1,38 @@
+id: embed-openclip-rn101-yfcc15m
+name: "embed openclip rn101 yfcc15m"
+description: "OpenCLIP RN101 for tag suggestions and image-similarity search; trained on Flickr Creative Commons photos (YFCC15M)"
+task: embed
+version: "0.1"
+arch: openclip-rn101
+type: single
+dep_group: openclip
+
+attributes:
+  # preprocessing — read by darktable's embedding pipeline
+  input_sizes: [224]
+  color_space: rgb
+  input_scale: 0.00392156862745098   # 1/255: uint8 → [0, 1]
+  # CLIP mean/std and the L2 norm are baked into the ONNX graph
+  # (see convert.py BiRefNetOnnx-style wrapper), so declare them as no-ops
+  norm_mean: [0.0, 0.0, 0.0]
+  norm_std:  [1.0, 1.0, 1.0]
+  output_l2_normalized: true
+
+model_card:
+  long_description: "OpenCLIP RN101. Powers tag suggestions and similar-image search. Trained on 15 million Flickr photos shared under Creative Commons licences – the only widely-available CLIP dataset built from author-consented images"
+  scope: "image tagging and similarity search"
+  author: "OpenCLIP (mlfoundations); YFCC15M curation: Thomee et al."
+  source: "https://github.com/mlfoundations/open_clip"
+  paper: "https://arxiv.org/abs/2212.07143"
+  license: "MIT"
+  training_data: "YFCC15M – 15M Flickr photos with Creative Commons licences, curated by Radford et al. for CLIP training"
+  training_data_license: "Creative Commons (mixed: BY, BY-SA, BY-NC, BY-ND, BY-NC-SA, BY-NC-ND, public-domain)"
+  notes: "English-only. The vision encoder is photo-domain-aligned, so quality on photo libraries is closer to larger web-scraped models than benchmark scores suggest"
+
+convert:
+  - script: convert.py
+    args:
+      output: "{output}/model.onnx"
+      tags_output: "{output}/tags.json"
+      opset: 20
+      fp16: true
