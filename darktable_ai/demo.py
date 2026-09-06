@@ -24,9 +24,11 @@ _RAW_IMAGE_EXTS = {
 _SAMPLE_EXTS = _PROCESSED_IMAGE_EXTS | _RAW_IMAGE_EXTS
 
 # Task → output file extension. Raw-domain tasks can't round-trip through PNG
-# because they produce linear HDR or >8-bit data.
+# because they produce linear HDR or >8-bit data; embedding models produce no
+# image at all.
 _OUTPUT_EXT_BY_TASK = {
     "rawdenoise": ".tif",
+    "embedding": ".json",
 }
 
 

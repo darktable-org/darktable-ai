@@ -29,19 +29,17 @@ rather than the everything-on-the-web mix that boosts LAION's ImageNet score.
 
 ## How it's used in darktable
 
-Two cooperating workflows:
+Two workflows, both image-to-image:
 
 - **Per-user tag taxonomy.** Average image embeddings per user-applied tag
   → centroid in 512-dim space. Suggest the same tag on new images whose
   embedding is close to that centroid.
-- **Cold-start defaults.** For users without enough examples of their own,
-  fall back to 86 precomputed centroids covering common photographic
-  concepts (see [`tags.md`](tags.md)). Hierarchical names use darktable's
-  `|` separator: `genre|landscape`, `subject|animal|dog`,
-  `lighting|golden hour`, etc.
+- **Image similarity.** The same embeddings answer "find more like this"
+  with no text involved.
 
-The text encoder is run *only at convert time* to bake those centroids
-into `tags.json`. At runtime, darktable runs only the image encoder.
+The package ships the image encoder only. There is no default tag
+vocabulary: a centroid built from a user's own photos describes what that
+user means by a tag far better than a generic label ever did.
 
 ## Architecture
 
@@ -57,7 +55,6 @@ into `tags.json`. At runtime, darktable runs only the image encoder.
 | File         | Purpose                                                                  | Size          |
 |--------------|--------------------------------------------------------------------------|---------------|
 | `model.onnx` | image → 512-dim L2-normalised embedding (mean/std subtraction baked in)  | ~60 MB (FP16) |
-| `tags.json`  | precomputed 512-dim centroids for the 86-tag default taxonomy            | ~270 KB       |
 
 The convert wrapper bakes mean/std subtraction and L2 normalisation into the
 ONNX graph so the caller only needs to feed `[0, 1]` RGB pixels.
@@ -69,10 +66,9 @@ Callers do not need to add any cast logic.
 
 ## Notes
 
-- **No text encoder ONNX in the runtime package.** The text encoder runs only
-  at darktable-ai build time to produce `tags.json`. Free-text search would
-  require shipping the text encoder separately – deferred until that feature
-  lands in darktable.
+- **No text encoder in the package.** Only the image encoder is exported, and
+  none is run at convert time. Free-text search would require shipping the
+  text encoder separately – deferred until that feature lands in darktable.
 - **Multilingual upgrade path is clean.** A future multilingual text encoder
   distilled to match this YFCC15M-aligned space could be added as an optional
   sidecar package without invalidating users' indexed image embeddings.
