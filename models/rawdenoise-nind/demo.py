@@ -27,33 +27,25 @@ import onnxruntime as ort
 # ---------------------------------------------------------------------------
 
 def pack_rggb(bayer: np.ndarray, raw_pattern, color_desc: str) -> np.ndarray:
-    """Pack a 2D Bayer mosaic into a 4-channel half-resolution [R, G1, G2, B] tensor."""
+    """Crop to RGGB, then pack spatial neighbours into [R, G1, G2, B]."""
     h, w = bayer.shape
-    assert h % 2 == 0 and w % 2 == 0, "Bayer dimensions must be even"
-
-    r_plane = g1_plane = g2_plane = b_plane = None
-    for i in range(2):
-        for j in range(2):
-            color = color_desc[int(raw_pattern[i, j])]
-            plane = bayer[i::2, j::2]
-            if color == "R":
-                r_plane = plane
-            elif color == "B":
-                b_plane = plane
-            elif color == "G":
-                if g1_plane is None:
-                    g1_plane = plane
-                else:
-                    g2_plane = plane
-            else:
-                raise ValueError(f"Unsupported Bayer colour: {color!r}")
-
-    if any(p is None for p in (r_plane, g1_plane, g2_plane, b_plane)):
-        raise ValueError(
-            f"Incomplete RGGB pattern from desc={color_desc!r} "
-            f"raw_pattern={raw_pattern.tolist()}"
-        )
-    return np.stack([r_plane, g1_plane, g2_plane, b_plane], axis=0)
+    if h % 2 or w % 2:
+        raise ValueError("Bayer dimensions must be even")
+    pattern = np.asarray(raw_pattern)
+    if pattern.shape != (2, 2) or np.any(pattern < 0) or np.any(pattern >= len(color_desc)):
+        raise ValueError("Expected a 2x2 RGB Bayer pattern")
+    colors = np.array(list(color_desc))[pattern]
+    red = np.argwhere(colors == "R")
+    if len(red) != 1:
+        raise ValueError("Bayer pattern must contain one red pixel")
+    y, x = red[0]
+    if np.roll(colors, (-y, -x), axis=(0, 1)).tolist() != [["R", "G"], ["G", "B"]]:
+        raise ValueError("Expected an RGB Bayer pattern")
+    bayer = bayer[y:h-y, x:w-x]
+    if min(bayer.shape) < 2:
+        raise ValueError("Bayer image is too small after RGGB cropping")
+    return np.stack([bayer[0::2, 0::2], bayer[0::2, 1::2],
+                     bayer[1::2, 0::2], bayer[1::2, 1::2]], axis=0)
 
 
 def load_raw_as_packed_bayer(image_path: str):

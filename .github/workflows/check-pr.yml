@@ -76,6 +76,10 @@ jobs:
       - name: Install dependencies
         run: uv sync --group ${{ matrix.dep_group }}
 
+      - name: Run model tests
+        if: ${{ hashFiles(format('models/{0}/test_*.py', matrix.id)) != '' }}
+        run: uv run python -m unittest discover -s "models/${{ matrix.id }}" -p 'test_*.py'
+
       - name: Download checkpoints
         run: uv run dtai setup ${{ matrix.id }}
 
