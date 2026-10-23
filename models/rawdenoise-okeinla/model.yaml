@@ -1,0 +1,43 @@
+id: rawdenoise-okeinla
+name: "Okeinla"
+description: "Bayer RAW denoising and demosaicing with NAFNet"
+task: rawdenoise
+version: "1.0"
+arch: nafnet
+backend: onnx
+tiling: true
+type: multi
+dep_group: rawnind
+coreml_format: mlprogram
+
+attributes:
+  input_sizes: [512]
+  model_bayer:
+    input_kind: bayer_v1
+    bayer_orientation: force_rggb
+    edge_pad: mirror_cropped
+    wb_norm: none
+    output_scale: match_gain
+
+repo:
+  submodule: vendor/okeinla
+
+checkpoints:
+  - url: "https://huggingface.co/AyedaOk/okeinla/resolve/7d4480d305ac9a425832afb9c110ee0b1af0200a/pytorch/iter_2940000.pt"
+    path: "temp/rawdenoise-okeinla/iter_2940000.pt"
+
+model_card:
+  long_description: "Okeinla 1.0 jointly denoises and demosaics Bayer RAW images using a NAFNet adapted from RawNIND."
+  scope: "Bayer RAW denoising and demosaicing"
+  author: "Ayeda Okambawa"
+  source: "https://github.com/AyedaOk/okeinla"
+  license: "GPL-3.0-only"
+  training_data: "RawNIND and Okeinla dataset: paired noisy and reference RAW photographs."
+  training_data_license: "CC-BY-SA-4.0"
+  notes: "Bayer only; no X-Trans or linear-RGB variant."
+
+convert:
+  - script: convert.py
+    args:
+      checkpoint: "{temp}/iter_2940000.pt"
+      output: "{output}/model_bayer.onnx"
